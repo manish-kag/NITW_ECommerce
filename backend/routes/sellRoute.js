@@ -14,7 +14,7 @@ productRouter.post('/sell', authUser, upload.fields([
 ]), sellItem)
 productRouter.get('/list', listProducts)
 productRouter.post('/single', singleProduct)
-productRouter.post('/remove', authUser, removeProduct)
+productRouter.post('/remove', adminAuth, removeProduct)
 productRouter.post('/sell', authUser, sellItem)
 productRouter.post('/buy', authUser, buyItem)
 productRouter.put('/update/:productId', authUser, updateItem)

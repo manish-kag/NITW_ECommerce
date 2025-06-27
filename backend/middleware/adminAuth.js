@@ -10,7 +10,8 @@ const authUser = async (req, res, next) => {
         const token_decoded = jwt.verify(token, process.env.JWT_SECRET);
         console.log("Decoded token content:", token_decoded); // ✅ Debug
 
-        if (!token_decoded.id) {
+        // Check for admin: true
+        if (!token_decoded.admin) {
             return res.status(403).json({ success: false, message: "Invalid Token Structure" });
         }
 

@@ -6,24 +6,23 @@ import { toast } from 'react-toastify';
 const Login = ({setToken}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+
     const onSubmitHandler = async (e) =>{
         e.preventDefault();
+        setErrorMsg('');
         try{
             const response = await axios.post(backendUrl + '/api/user/admin', {email, password})
-            if(response.data.success){
+            if(response.data.success && response.data.token){
                 setToken(response.data.token);
                 localStorage.setItem('token', response.data.token);
             }
             else{
-                setToken('');
-                localStorage.removeItem('token');
-                toast.error(response.data.message)
+                setErrorMsg("You are not admin or credentials are invalid.");
             }
         }
         catch (error){
-            setToken('');
-            localStorage.removeItem('token');
-            toast.error(error.message)
+            setErrorMsg("You are not admin or credentials are invalid.");
         }
     }
   return (
@@ -39,6 +38,7 @@ const Login = ({setToken}) => {
                 <p className='text-sm font-medium text-gray-700 mb-2'>Password</p>
                 <input onChange={(e) => setPassword(e.target.value)} value={password} className='rounded-md w-full px-3 py-2 border border-gray-300 outline-none' type="password" placeholder='Enter your password' required />
             </div>
+            {errorMsg && <div className="text-red-600 text-sm mb-2">{errorMsg}</div>}
             <button className='mt-2 w-full py-2 px-4 rounded-md text-white bg-black' type='submit'>Login</button>
         </form>
       </div>
@@ -47,3 +47,4 @@ const Login = ({setToken}) => {
 }
 
 export default Login
+

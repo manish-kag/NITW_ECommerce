@@ -54,7 +54,7 @@ const PlaceOrder = () => {
         street: formData.street,
         city: formData.city,
         state: formData.state,
-        pincode: formData.zipcode, // backend expects pincode
+        pincode: formData.zipcode, // <-- must be 'pincode' not 'zipcode'
         phone: formData.phone
       };
       let orderData = {

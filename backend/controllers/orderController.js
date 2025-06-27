@@ -10,9 +10,8 @@ const MIN_ORDER_AMOUNT = 50; // Set correct minimum order amount
 
 const placeOrder = async (req, res) => {
     try {
-         const userId = req.userId; // <-- get from middleware
+        const userId = req.userId;
         const {items, address} = req.body;
-        // Calculate totalAmount from items
         let totalAmount = 0;
         for (const item of items) {
             const product = await import('../models/productModel.js').then(m => m.default.findById(item.product));
@@ -23,7 +22,7 @@ const placeOrder = async (req, res) => {
         const orderData = {
             userId,
             items,
-            amount: totalAmount, // <-- always set amount
+            amount: totalAmount,
             address,
             paymentMethod: "COD",
             payment: false,
@@ -32,11 +31,14 @@ const placeOrder = async (req, res) => {
         const newOrder = new orderModel(orderData)
         await newOrder.save()
 
-        // After saving the order, delete the product from the database
+        // Instead of deleting, mark product as sold and store buyer info
         for (const item of items) {
             const productId = item._id || item.product || item.id;
             if (productId) {
-                await productModel.findByIdAndDelete(productId);
+                await productModel.findByIdAndUpdate(productId, {
+                    status: "sold",
+                    buyer: userId // Add buyer field to product
+                });
             }
         }
 

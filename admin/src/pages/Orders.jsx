@@ -12,10 +12,10 @@ const Orders = ({ token }) => {
 
     try {
       const response = await axios.post(
-  backendUrl + '/api/order/list',
-  {},
-  { headers: { token } }
-);
+        backendUrl + '/api/order/list',
+        {},
+        { headers: { token } } // <-- Use 'token' instead of 'Authorization'
+      );
       if (response.data.success) {
         setOrders(response.data.orders);
       } else {
@@ -81,6 +81,10 @@ const Orders = ({ token }) => {
                 </p>
               </div>
               <p>{order.address.phone}</p>
+              {/* Show buyer info */}
+              <p className="mt-2 text-xs text-gray-500">
+                Buyer: {order.userId?.name || order.userId || '-'}
+              </p>
             </div>
             <div>
               <p className="text-sm sm:text-[15px]">Items: {order.items.length}</p>

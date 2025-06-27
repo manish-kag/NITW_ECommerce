@@ -20,6 +20,11 @@ const productSchema = new mongoose.Schema({
     ref: 'user',
     required: true
   },
+  buyer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    default: null
+  },
 
   bestseller: { type: Boolean, default: false },
 
