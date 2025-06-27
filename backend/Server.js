@@ -15,7 +15,10 @@ const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
 app.use(express.json()) 
-app.use(cors())
+app.use(cors({
+    origin: 'https://internitshop.vercel.app',
+    credentials: true
+}))
 
 // API endpoints
 app.use('/api/user', userRouter)
