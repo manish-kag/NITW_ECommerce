@@ -4,8 +4,7 @@ import axios from 'axios'
 const NewsLetterBox = () => {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState('');
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://inter-nit-backend.vercel.app";
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         setStatus('');
