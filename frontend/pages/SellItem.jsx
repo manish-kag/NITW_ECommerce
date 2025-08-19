@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ShopContext } from '../src/context/ShopContext';
 import { assets } from '../src/assets/product/assets';
-const backendUrl = "http://localhost:4000"; // Change as needed
+const backendUrl = "https://inter-nit-backend.vercel.app"; // Change as needed
 
 const SellItem = () => {
   const { token: contextToken } = useContext(ShopContext);
